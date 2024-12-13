@@ -1,0 +1,65 @@
+# Docker Image Configuration
+image:
+  repository: your-dockerhub-username/myapp  # Docker imajının deposu
+  tag: latest                                # Kullanılacak imaj etiketi
+  pullPolicy: IfNotPresent                  # Çekme politikası (Always, IfNotPresent, Never)
+
+# Service Configuration
+service:
+  type: ClusterIP                           # Servis tipi (ClusterIP, NodePort, LoadBalancer)
+  port: 8080                                # Servisin expose edileceği port
+
+# Ingress Configuration
+ingress:
+  enabled: false                            # Ingress kullanılıp kullanılmayacağı
+  annotations: {}                           # Ingress için ek açıklamalar
+  hosts:
+    - host: example.com                     # Ingress host adı
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []                                   # TLS ayarları (opsiyonel)
+
+# Service Account Configuration
+serviceAccount:
+  create: true                              # Yeni bir ServiceAccount oluşturulsun mu?
+  name: ""                                  # Belirli bir ad (boşsa otomatik ad oluşturulur)
+
+# Database Configuration
+database:
+  host: mysql                               # Veritabanı sunucusu adı
+  user: root                                # Veritabanı kullanıcı adı
+  password: secretpassword                  # Veritabanı şifresi
+  name: bezkoder_db                         # Veritabanı adı
+  port: 3306                                # Veritabanı portu
+
+# Replica Configuration
+replicaCount: 2                             # Pod sayısı
+
+# Resource Limits and Requests
+resources:
+  limits:
+    cpu: "500m"                             # Maksimum CPU kullanımı
+    memory: "512Mi"                         # Maksimum bellek kullanımı
+  requests:
+    cpu: "250m"                             # Minimum CPU gereksinimi
+    memory: "256Mi"                         # Minimum bellek gereksinimi
+
+# Node Selector for Scheduling
+nodeSelector: {}
+
+# Tolerations for Scheduling
+tolerations: []
+
+# Affinity Rules for Scheduling
+affinity: {}
+
+# External Secrets (Opsiyonel)
+externalSecrets:
+  enabled: false                            # External Secret kullanılıp kullanılmayacağı
+  secretName: my-external-secret            # Secret adı
+  keys:                                     # Secret anahtarları
+    - key: db-password
+      name: DB_PASSWORD
+    - key: db-user
+      name: DB_USER
